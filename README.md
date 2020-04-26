@@ -1,2 +1,2 @@
 # xiaoClassmate.github.io
-專題網站(暫時)
+https://xiaoclassmate.github.io/index.html
