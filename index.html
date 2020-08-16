@@ -21,10 +21,10 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+  <div class="modal-dialog modal-lg"role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">表單</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">industriousWoman</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -52,13 +52,10 @@
           <div id="form-group">
             <label>可接受數量</label><input type="text" class="form-control" id="acceptNumber">
           </div>
-          <!-- <button style="display: none;" class="btn btn-outline-primary" id="updateBtn">修改</button>
-          <button style="display: none;" class="btn btn-outline-danger" id="deleteBtn">取消</button> -->
         </form>
       </div>
     </div>
   </div>
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
@@ -77,78 +74,72 @@
   <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-database.js"></script>
   <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyCDuyQEcT7FbDI8kJkQ4TzP0Un3F4BwC3A",
+      authDomain: "industriouswoman-myg36t91.firebaseapp.com",
+      databaseURL: "https://industriouswoman-myg36t91.firebaseio.com",
+      projectId: "industriouswoman-myg36t91",
+      storageBucket: "industriouswoman-myg36t91.appspot.com",
+      messagingSenderId: "902295424134",
+      appId: "1:902295424134:web:7876cc39ae5fd3a0ea9507",
+      measurementId: "G-DXZ0LF42BC"
+    };
 
- //   function add() {
- // document.getElementById('all_light').style.display = 'block';
- // document.getElementById('contes').style.display = 'block';
- // }
+    firebase.initializeApp(firebaseConfig);
 
- //    var firebaseConfig = {
- //      apiKey: "AIzaSyCDuyQEcT7FbDI8kJkQ4TzP0Un3F4BwC3A",
- //      authDomain: "industriouswoman-myg36t91.firebaseapp.com",
- //      databaseURL: "https://industriouswoman-myg36t91.firebaseio.com",
- //      projectId: "industriouswoman-myg36t91",
- //      storageBucket: "industriouswoman-myg36t91.appspot.com",
- //      messagingSenderId: "902295424134",
- //      appId: "1:902295424134:web:7876cc39ae5fd3a0ea9507",
- //      measurementId: "G-DXZ0LF42BC"
- //    };
+    document.getElementById("form").addEventListener("submit",(e)=>{
+      var name = document.getElementById("name").value;
+      var price = document.getElementById("price").value;
+      var mustNumber = document.getElementById("mustNumber").value;
+      var acceptNumber = document.getElementById("acceptNumber").value;
+      e.preventDefault();
+      createGoods(name, price, mustNumber, acceptNumber);
+      form.reset();
+    });
 
- //    firebase.initializeApp(firebaseConfig);
+    function createGoods(name, price, mustNumber, acceptNumber){
+      var data={
+        name: name,
+        price: price,
+        mustNumber: mustNumber,
+        acceptNumber: acceptNumber
+      }
+      firebase.database().ref("goods").push(data).then(()=>{
+        Swal.fire('','商品新增成功','success');
+      });
+      document.getElementById("readSection").innerHTML="";
+      readGoods();
+    }
 
- //    document.getElementById("form").addEventListener("submit",(e)=>{
- //      var name = document.getElementById("name").value;
- //      var price = document.getElementById("price").value;
- //      var mustNumber = document.getElementById("mustNumber").value;
- //      var acceptNumber = document.getElementById("acceptNumber").value;
- //      e.preventDefault();
- //      createGoods(name, price, mustNumber, acceptNumber);
- //      form.reset();
- //    });
+    function readGoods(){
+      firebase.database().ref("goods").on("value", function(snapshot){
+        snapshot.forEach(function(childSnapshot){
+          var goodsData = childSnapshot.val();
+          document.getElementById('readSection').textContent += JSON.stringify(goodsData);
+          // document.getElementById("readSection").innerHTML += `
+          // <div class="card mb-2">
+          //   <div class="card-body">
+          //     <div class="row">
+          //       <div class="col-9">
+          //       Name: ${goodsData.name}, Price: ${goodsData.price}, MustNumber: ${goodsData.mustNumber}, AcceptNumber:  ${goodsData.acceptNumber}
+          //       </div>
+          //       <div class="col-3">
+          //         <button class="btn btn-outline-primary" onclick="updateGoods('${goodsData.name}','${goodsData.price}','${goodsData.mustNumber}','${goodsData.acceptNumber}')">編輯</button>
+          //         <button class="btn btn-outline-danger" onclick="deleteGoods(${goodsData.id})">刪除</button>
+          //       </div>
+          //     </div>
+          //   </div>
+          // </div>
+          // `
+        });
+      });
+    }
 
- //    function createGoods(name, price, mustNumber, acceptNumber){
- //      var data={
- //        name: name,
- //        price: price,
- //        mustNumber: mustNumber,
- //        acceptNumber: acceptNumber
- //      }
- //      firebase.database().ref("goods").push(data).then(()=>{
- //        Swal.fire('','商品新增成功','success');
- //      });
- //      document.getElementById("readSection").innerHTML="";
- //      readGoods();
- //    }
-
- //    function readGoods(){
- //      firebase.database().ref("goods").on("value", function(snapshot){
- //        snapshot.forEach(function(childSnapshot){
- //          var goodsData = childSnapshot.val();
- //          document.getElementById('readSection').textContent += JSON.stringify(goodsData);
- //          // document.getElementById("readSection").innerHTML += `
- //          // <div class="card mb-2">
- //          //   <div class="card-body">
- //          //     <div class="row">
- //          //       <div class="col-9">
- //          //       Name: ${goodsData.name}, Price: ${goodsData.price}, MustNumber: ${goodsData.mustNumber}, AcceptNumber:  ${goodsData.acceptNumber}
- //          //       </div>
- //          //       <div class="col-3">
- //          //         <button class="btn btn-outline-primary" onclick="updateGoods('${goodsData.name}','${goodsData.price}','${goodsData.mustNumber}','${goodsData.acceptNumber}')">編輯</button>
- //          //         <button class="btn btn-outline-danger" onclick="deleteGoods(${goodsData.id})">刪除</button>
- //          //       </div>
- //          //     </div>
- //          //   </div>
- //          // </div>
- //          // `
- //        });
- //      });
- //    }
-
- //    function updateGoods(name, price, mustNumber, acceptNumber){
- //      document.getElementById("createSection").innerHTML = `
+    function updateGoods(name, price, mustNumber, acceptNumber){
+      document.getElementById("createSection").innerHTML = `
       
- //      `
- //    }
+      `
+    }
 
   </script>
 </body>
