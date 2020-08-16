@@ -21,7 +21,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">表單</h5>
@@ -52,20 +52,17 @@
           <div id="form-group">
             <label>可接受數量</label><input type="text" class="form-control" id="acceptNumber">
           </div>
-          <br>
-          <button style="display: none;"type="submit" class="btn btn-outline-success" id="createBtn">新增</button>
-          <button style="display: none;" class="btn btn-outline-primary" id="updateBtn">修改</button>
-          <button style="display: none;" class="btn btn-outline-danger" id="deleteBtn">取消</button>
+          <!-- <button style="display: none;" class="btn btn-outline-primary" id="updateBtn">修改</button>
+          <button style="display: none;" class="btn btn-outline-danger" id="deleteBtn">取消</button> -->
         </form>
-
       </div>
     </div>
   </div>
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary">新增商品</button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">取消</button>
+        <button type="submit" class="btn btn-outline-success" id="createBtn">新增商品</button>
       </div>
     </div>
   </div>
