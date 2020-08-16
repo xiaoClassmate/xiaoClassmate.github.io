@@ -55,6 +55,8 @@
       </div>
     </div>
   </div>
+
+  <div id="readSection"></div>
   
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -106,22 +108,22 @@
       firebase.database().ref("goods").on("value", function(snapshot){
         snapshot.forEach(function(childSnapshot){
           var goodsData = childSnapshot.val();
-          document.getElementById('readSection').textContent += JSON.stringify(goodsData);
-          // document.getElementById("readSection").innerHTML += `
-          // <div class="card mb-2">
-          //   <div class="card-body">
-          //     <div class="row">
-          //       <div class="col-9">
-          //       Name: ${goodsData.name}, Price: ${goodsData.price}, MustNumber: ${goodsData.mustNumber}, AcceptNumber:  ${goodsData.acceptNumber}
-          //       </div>
-          //       <div class="col-3">
-          //         <button class="btn btn-outline-primary" onclick="updateGoods('${goodsData.name}','${goodsData.price}','${goodsData.mustNumber}','${goodsData.acceptNumber}')">編輯</button>
-          //         <button class="btn btn-outline-danger" onclick="deleteGoods(${goodsData.id})">刪除</button>
-          //       </div>
-          //     </div>
-          //   </div>
-          // </div>
-          // `
+          // document.getElementById('readSection').textContent += JSON.stringify(goodsData);
+          document.getElementById("readSection").innerHTML += `
+          <div class="card mb-2">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-9">
+                Name: ${goodsData.name}, Price: ${goodsData.price}, MustNumber: ${goodsData.mustNumber}, AcceptNumber:  ${goodsData.acceptNumber}
+                </div>
+                <div class="col-3">
+                  <button class="btn btn-outline-primary" onclick="updateGoods('${goodsData.name}','${goodsData.price}','${goodsData.mustNumber}','${goodsData.acceptNumber}')">編輯</button>
+                  <button class="btn btn-outline-danger" onclick="deleteGoods(${goodsData.id})">刪除</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          `
         });
       });
     }
