@@ -2,12 +2,12 @@ MAX_STORY_PARAGRAPH = 3
 LINE_SKIP_TIMEOUT = false;
 var bgm_timeout;
 
-// window.addEventListener("load", function() {
-    // $(".loading").html("開始遊戲");
-    // $(".loading").addClass("start-game");
-    // game.btn_handler("#btn-2", {scene: 1001}, game);
-    // game.start_game_handler();
-// }, false); 
+window.addEventListener("click", function() {
+    $(".loading").html("開始遊戲");
+    $(".loading").addClass("start-game");
+    game.btn_handler("#btn-2", {scene: 1001}, game);
+    game.start_game_handler();
+}, false); 
 
 class StoryGame {
 	constructor(game, scene){
