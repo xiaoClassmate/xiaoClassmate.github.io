@@ -1,34 +1,190 @@
-<html>
-	<head>
-		<title>Cpoy</title>
-        <meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC" rel="stylesheet">
-		<script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-		<script type="text/javascript" src="js/turn.min.js"></script>
-		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="static/css/main.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css">
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <title>拆帳</title>
+</head>
+<body onload="readGoods()">
+	<nav class="navbar navbar-dark bg-dark" id="header">
+	  <span class="navbar-brand">industriousWoman</span>
+	</nav>
 
-		<link rel="stylesheet" href="css/main.css">
-		<script type="text/javascript" src="js/storygame.js"></script>
-		<script type="text/javascript" src="js/scene.js"></script>
-		<script type="text/javascript" src="js/main.js"></script>
-	</head>
-	<body data-gr-c-s-loaded="true">
-		<audio src="./bgm/ok/line_call_end.mp3" id="line-call-end" volume="0.8"></audio>
-		<audio src="./bgm/ok/line_call.mp3" id="line-call" volume="0.8"></audio>
-		<audio src="./bgm/ok/line_read.mp3" id="line-read" volume="1"></audio>
-		<audio src="./bgm/ok/bg.mp3" id="bg" volume="0.2" loop="loop"></audio>
-		<div id="wrapper">
-			<div id="loading"></div>
-			<div id="game" style="position: relative; top: 50%;width: 375px; height: 667px; margin-left: calc((100% - 375px) / 2); padding-left: 38px; padding-right: 38px; background: url(&quot;imgs/index.jpg&quot;) 0% 0% / 377px 669px;">
-				<div class="story-wrapper">
-					<p class="story story-content"></p>
+	<br>
+
+  <!--Product Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-lg"role="document">
+		  <div class="modal-content">
+			  <div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">industriousWoman</h5>
+			  </div>
+			  <div class="modal-body">
+					<form class="border p-4" id="form">
+					  <div id="form-group">
+							<input type="radio" name="select">
+							<label>Product Name</label><input type="text" class="form-control" id="name">
+					  </div>
+					  <div id="form-group">
+							<input type="radio" name="select">
+							<input type="file" name="file" id="file-input" class="visuallyhidden">
+							<label>Product Image</label><input type="button" class="form-control file-upload" value="選擇圖片" id="image">
+					  </div>
+					  <div id="form-group">
+							<label>Product Price</label><input type="text" class="form-control" id="price">
+					  </div>
+					  <div id="form-group">
+							<label>Product Quantity</label><input type="text" class="form-control" id="mustNumber">
+					  </div>
+					  <br>
+					  <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+					  <button type="submit" class="btn btn-outline-success" id="createBtn">Confirm</button>
+					</form>
 				</div>
-				<div class="btn-wrapper">
-					<a id="btn-2" href="#" class="btn btn-default start-game">開始遊戲</a>
-				</div>
-			</div>
+		  </div>
 		</div>
-	</body>
+  </div>
+
+  <!--Split Modal -->
+  <div class="modal fade" id="exampleModalCenterSp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-lg"role="document">
+		  <div class="modal-content">
+			  <div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">industriousWoman</h5>
+			  </div>
+			  <div class="modal-body">
+					<form class="border p-4" id="form">
+					  <div id="form-group">
+							<label>Split Price</label><input type="text" class="form-control" id="mustNumber">
+					  </div>
+					  <br>
+					  <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+					  <button type="submit" class="btn btn-outline-success" id="createBtn">Confirm</button>
+					</form>
+				</div>
+		  </div>
+		</div>
+  </div>
+ 
+  <div id="demo" class="carousel slide" data-wrap="false" data-interval="false">
+    <div class="carousel-inner">
+	    <div class="carousel-item active">
+	    <!-- 觸發 Modal -->
+	    	<div align="center">
+ 					<p><button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenter">New Product</button></p>
+ 					<div class="row" id="readSection"></div>
+ 				</div>
+	    </div>
+	    <div class="carousel-item">
+	    	<div align="center">
+	    		<p><button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenterSp">New Split</button></p>
+	    	</div>
+	    </div>
+	    <div class="carousel-item">
+	    	<div align="center">
+	    		<p><button type="button" class="btn btn-outline-primary">Confirm Page</button></p>
+	    	</div>
+	    </div>
+	    <div class="carousel-item">
+	    	<div align="center">
+	    		<p><button type="button" class="btn btn-outline-primary">Compute</button></p>
+	    	</div>
+	    	</div>
+	    </div>
+	  </div>
+	  <div id="footer">
+			<nav class="navbar navbar-dark bg-dark">
+			  <button class="btn btn-secondary" data-slide="prev" href="#demo">Previous</button>
+			  <span class="navbar-brand" style="text-align: center;">2020 . 09 . 09</span>
+		  	<button class="btn btn-secondary" data-slide="next" href="#demo">Next</button>
+			</nav>
+		</div>
+	</div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.1/dist/sweetalert2.all.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-database.js"></script>
+  <script>
+	var firebaseConfig = {
+	  apiKey: "AIzaSyCDuyQEcT7FbDI8kJkQ4TzP0Un3F4BwC3A",
+	  authDomain: "industriouswoman-myg36t91.firebaseapp.com",
+	  databaseURL: "https://industriouswoman-myg36t91.firebaseio.com",
+	  projectId: "industriouswoman-myg36t91",
+	  storageBucket: "industriouswoman-myg36t91.appspot.com",
+	  messagingSenderId: "902295424134",
+	  appId: "1:902295424134:web:7876cc39ae5fd3a0ea9507",
+	  measurementId: "G-DXZ0LF42BC"
+	};
+
+	firebase.initializeApp(firebaseConfig);
+
+	document.getElementById("form").addEventListener("submit",(e)=>{
+	  var name = document.getElementById("name").value;
+	  var price = document.getElementById("price").value;
+	  var mustNumber = document.getElementById("mustNumber").value;
+	  e.preventDefault();
+	  createGoods(name, price, mustNumber);
+	  form.reset();
+	});
+
+	function createGoods(name, price, mustNumber){
+	  var data={
+		name: name,
+		price: price,
+		mustNumber: mustNumber
+	  }
+	  firebase.database().ref("goods").push(data).then(()=>{
+		Swal.fire('','商品新增成功','success');
+	  });
+	  document.getElementById("readSection").innerHTML="";
+	  readGoods();
+	}
+
+	function readGoods(){
+	  firebase.database().ref("goods").on("value", function(snapshot){
+			snapshot.forEach(function(childSnapshot){
+			  var goodsData = childSnapshot.val();
+			  // document.getElementById('readSection').textContent += JSON.stringify(goodsData);
+			  document.getElementById("readSection").innerHTML += `
+			  <div style="margin-left:57px">
+			  <div class="card border-dark mb-3" style="max-width: 400px;">
+					<div class="row no-gutters">
+						<div class="col-md-4">
+							<img src="static/imgs/cat.jpg" class="card-img" alt="Image" width="150" height="150">
+				 		</div>
+				 		<div class="col-md-5">
+							<div class="card-body">
+								<h5 class="card-title">${goodsData.name}</h5>
+								<p class="card-text">${goodsData.price}</p>
+							</div>
+						</div>
+						</div>
+					</div>
+					<div class="card-footer bg-transparent border-dark">
+						<button class="btn btn-outline-primary">Edit</button>
+						<button class="btn btn-outline-danger">Delete</button>
+					</div>
+				</div>
+				</div>
+				`
+			});
+	  });
+	}
+
+	function updateGoods(name, price, mustNumber, acceptNumber){
+	  document.getElementById("createSection").innerHTML = `
+	  
+	  `
+	}
+
+  </script>
+</body>
 </html>
