@@ -173,15 +173,15 @@
 			  var goodsData = childSnapshot.val();
 			  // document.getElementById('readSection').textContent += JSON.stringify(goodsData);
 			  document.getElementById("readSection").innerHTML += `
-			  <div style="margin-left:25px">
-				  <div class="card border-dark mb-3" style="max-width: 675px;">
+			  <div style="margin-left:57px">
+				  <div class="card border-dark mb-3" style="max-width: 400px;">
 						<div class="row no-gutters">
 							<div class="col-md-3" style="margin-left:10px">
 								<img src="static/imgs/picture.png" class="card-img" alt="Image" width="150" height="150">
 					 		</div>
-					 		<div class="col-md-7">
+					 		<div class="col-md-6">
 								<div class="card-body">
-									<p class="card-text">Name : ${goodsData.name}<br>Price : ${goodsData.price}<br>Number : ${goodsData.mustNumber}</p>
+									<p class="card-text float-left" style="text-align: left;">Name : ${goodsData.name}<br>Price : ${goodsData.price}<br>Number : ${goodsData.mustNumber}</p>
 								</div>
 							</div>
 							<div class="col-md-1">
