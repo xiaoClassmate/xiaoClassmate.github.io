@@ -10,8 +10,8 @@
   <title>拆帳</title>
 </head>
 <body onload="readGoods()">
-	<nav class="navbar navbar-dark bg-dark" id="header">
-	  <span class="navbar-brand">industriousWoman</span>
+	<nav class="navbar navbar-light" style="background-color: #4ebeba;">
+	  <span class="navbar-brand" style="color: #FFFFFF;">industriousWoman</span>
 	</nav>
 
 	<br>
@@ -57,13 +57,13 @@
 					<h5 class="modal-title" id="exampleModalLongTitle">industriousWoman</h5>
 			  </div>
 			  <div class="modal-body">
-					<form class="border p-4" id="form">
+					<form class="border p-4" id="priceSp">
 					  <div id="form-group">
-							<label>Split Price</label><input type="text" class="form-control" id="mustNumber">
+							<label>Split Price</label><input type="text" class="form-control" id="split">
 					  </div>
 					  <br>
 					  <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
-					  <button type="submit" class="btn btn-outline-success" id="createBtn">Confirm</button>
+					  <button type="submit" class="btn btn-outline-success" id="splitBtn">Confirm</button>
 					</form>
 				</div>
 		  </div>
@@ -82,6 +82,7 @@
 	    <div class="carousel-item">
 	    	<div align="center">
 	    		<p><button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenterSp">New Split</button></p>
+	    		<div class="row" id="splitSection"></div>
 	    	</div>
 	    </div>
 	    <div class="carousel-item">
@@ -96,11 +97,11 @@
 	    	</div>
 	    </div>
 	  </div>
-	  <div id="footer">
-			<nav class="navbar navbar-dark bg-dark">
-			  <button class="btn btn-secondary" data-slide="prev" href="#demo">Previous</button>
-			  <span class="navbar-brand" style="text-align: center;">2020 . 09 . 09</span>
-		  	<button class="btn btn-secondary" data-slide="next" href="#demo">Next</button>
+	  <div class="fixed-bottom">
+			<nav class="navbar navbar-light" style="background-color: #4ebeba;">
+			  <button class="btn btn-outline-light" data-slide="prev" href="#demo">Previous</button>
+			  <span class="navbar-brand" style="text-align: center; color: #FFFFFF;">2020 . 09 . 09</span>
+		  	<button class="btn btn-outline-light" data-slide="next" href="#demo">Next</button>
 			</nav>
 		</div>
 	</div>
@@ -148,32 +149,61 @@
 	  readGoods();
 	}
 
+	document.getElementById("priceSp").addEventListener("submit",(e)=>{
+	  var price = document.getElementById("split").value;
+	  e.preventDefault();
+	  createSp(price);
+	  form.reset();
+	});
+
+	function createSp(price){
+	  var data={
+		price: price
+	  }
+	  firebase.database().ref("split").push(data).then(()=>{
+		Swal.fire('','目標金額新增成功','success');
+	  });
+	  document.getElementById("splitSection").innerHTML="";
+	  readGoods();
+	}
+
 	function readGoods(){
 	  firebase.database().ref("goods").on("value", function(snapshot){
 			snapshot.forEach(function(childSnapshot){
 			  var goodsData = childSnapshot.val();
 			  // document.getElementById('readSection').textContent += JSON.stringify(goodsData);
 			  document.getElementById("readSection").innerHTML += `
-			  <div style="margin-left:57px">
-			  <div class="card border-dark mb-3" style="max-width: 400px;">
-					<div class="row no-gutters">
-						<div class="col-md-4">
-							<img src="static/imgs/cat.jpg" class="card-img" alt="Image" width="150" height="150">
-				 		</div>
-				 		<div class="col-md-5">
-							<div class="card-body">
-								<h5 class="card-title">${goodsData.name}</h5>
-								<p class="card-text">${goodsData.price}</p>
+			  <div style="margin-left:75px">
+				  <div class="card border-dark mb-3" style="max-width: 600px;">
+						<div class="row no-gutters">
+							<div class="col-md-3" style="margin-left:10px">
+								<img src="static/imgs/picture.png" class="card-img" alt="Image" width="150" height="150">
+					 		</div>
+					 		<div class="col-md-7">
+								<div class="card-body">
+									<p class="card-text">Name : ${goodsData.name}<br>Price : ${goodsData.price}<br>Number : ${goodsData.mustNumber}</p>
+								</div>
+							</div>
+							<div class="col-md-1">
+								<br>
+								<button class="btn btn-outline-primary float-left">Edit</button><br><br>
+								<button class="btn btn-outline-danger float-left">Delete</button>
 							</div>
 						</div>
-						</div>
-					</div>
-					<div class="card-footer bg-transparent border-dark">
-						<button class="btn btn-outline-primary">Edit</button>
-						<button class="btn btn-outline-danger">Delete</button>
 					</div>
 				</div>
-				</div>
+				`
+			});
+	  });
+	}
+
+	function readSplit(){
+	  firebase.database().ref("split").on("value", function(snapshot){
+			snapshot.forEach(function(childSnapshot){
+			  var splitData = childSnapshot.val();
+			  // document.getElementById('readSection').textContent += JSON.stringify(goodsData);
+			  document.getElementById("splitSection").innerHTML += `
+			 	
 				`
 			});
 	  });
