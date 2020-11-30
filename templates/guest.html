@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel=stylesheet type="text/css" href="css/hakka.css">
-	<!-- Socket-->
+		<!-- Socket-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="main/mySocketConnect.js"></script>
 	<script type="text/javascript" src="main/cookieUtility.js"></script>
@@ -23,6 +23,7 @@
 	<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
 	<script type="text/javascript" src="main/auth.js"></script>
 	<script type="text/javascript" src="main/member.js"></script>
+	<script type="text/javascript" src="main/reciprocal.js"></script>
 	<title>haka</title>
 </head>
 <body>
@@ -99,15 +100,21 @@
 		<div class="collapse position-fixed" id="myCarousel">
 			<!-- 導覽列彈出標題 -->
 			<nav class="mynavbar navbar-dark">
-				<label>會員</label>
-				<label>，您好！</label>
+				<label>訪客登入</label>
 			</nav>
 			<!-- 導覽列彈出內文 -->
 			<div class="content">
 				<div class="container-fluid">
 					<form class="inp">
 						<br>
-						<label class="word" onclick="visitor()" id="signoutSmtBtn">登出</label>
+						<label class="word">e-mail:</label>
+						<input type="text" class="" placeholder="請輸入e-mail" id="accountL">
+						<label class="word">密碼:</label>
+						<input type="password" class="" placeholder="請輸入密碼" id="pwdL">
+						<br><br>
+						<input type="button" value="登入" onclick="login()" id="loginSmtBtn">
+						<br><br>
+						<a class="" onclick="reg()">還沒有帳號?</a>
 					</form>
 				</div>
 			</div>
